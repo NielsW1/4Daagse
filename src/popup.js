@@ -12,3 +12,7 @@ document.getElementById('clear').onclick = (e) => {
     }
   });
 }
+
+document.getElementById('test').onclick = (e) => {
+  chrome.runtime.sendMessage({type: "notify", title: "4Daagse extension", message: "Testnotificatie!"});
+}

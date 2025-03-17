@@ -92,17 +92,33 @@ async function requestTickets() {
 }
 
 function handleResponse(response) {
-  if (response.data.event.registrations_for_sale_count >= 0) {
-    sendNotification()
+  if (response.data.event.registrations_for_sale_count > 0) {
+    sendNotification("4Daagse extension", "Er is een ticket beschikbaar!")
   }
 }
 
-function sendNotification() {
+function sendNotification(title, message) {
   console.log("Sending notification")
   chrome.notifications.create({
     type: "basic",
     iconUrl: "icons/logo.png",
-    title: "4Daagse ticket beschikbaar!",
-    message: "https://www.4daagse.nl/deelnemen/ticket-overdragen"
+    title: title,
+    message: message,
+    buttons: [
+      { title: "Naar 4Daagse site" }
+    ]
   });
 }
+
+chrome.notifications.onButtonClicked.addListener((notificationId, buttonIndex) => {
+  if (notificationId.toString() === 'notification-with-link' && buttonIndex === 0) {
+    chrome.tabs.create({ url: "https://www.4daagse.nl/deelnemen/ticket-overdragen" });
+  }
+});
+
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+  if (request.type === "notify") {
+    console.log("Sending test notification")
+    sendNotification(request.title, request.message);
+  }
+});
