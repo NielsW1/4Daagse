@@ -1,0 +1,17 @@
+{
+  "name": "4daagse extension",
+  "description": "Base Level Extension",
+  "version": "1.0",
+  "manifest_version": 3,
+  "permissions": [
+    "alarms",
+    "notifications"
+  ],
+  "action": {
+    "default_popup": "4daagse.html",
+    "default_icon": "icons/logo.png"
+  },
+  "background": {
+    "service_worker": "script.js"
+  }
+}
