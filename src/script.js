@@ -110,10 +110,8 @@ function sendNotification(title, message) {
   });
 }
 
-chrome.notifications.onButtonClicked.addListener((notificationId, buttonIndex) => {
-  if (notificationId.toString() === 'notification-with-link' && buttonIndex === 0) {
-    chrome.tabs.create({ url: "https://www.4daagse.nl/deelnemen/ticket-overdragen" });
-  }
+chrome.notifications.onButtonClicked.addListener(() => {
+  chrome.tabs.create({ url: "https://www.4daagse.nl/deelnemen/ticket-overdragen" });
 });
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
